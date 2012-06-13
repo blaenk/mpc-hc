@@ -23,6 +23,7 @@
 
 #pragma once
 
+#include <afxstr.h>
 #include "NullRenderers.h"
 #include "HdmvClipInfo.h"
 #include "H264Nalu.h"
@@ -115,99 +116,98 @@ extern LPCTSTR GetDXVAMode(const GUID* guidDecoder);
 extern void DumpBuffer(BYTE* pBuffer, int nSize);
 extern CString ReftimeToString(const REFERENCE_TIME& rtVal);
 extern CString ReftimeToString2(const REFERENCE_TIME& rtVal);
-extern CString DVDtimeToString(const DVD_HMSF_TIMECODE& rtVal, bool bAlwaysShowHours=false);
+extern CString DVDtimeToString(const DVD_HMSF_TIMECODE& rtVal, bool bAlwaysShowHours = false);
 extern REFERENCE_TIME StringToReftime(LPCTSTR strVal);
 extern COLORREF YCrCbToRGB_Rec601(BYTE Y, BYTE Cr, BYTE Cb);
 extern COLORREF YCrCbToRGB_Rec709(BYTE Y, BYTE Cr, BYTE Cb);
-extern DWORD	YCrCbToRGB_Rec601(BYTE A, BYTE Y, BYTE Cr, BYTE Cb);
-extern DWORD	YCrCbToRGB_Rec709(BYTE A, BYTE Y, BYTE Cr, BYTE Cb);
-extern void		TraceFilterInfo(IBaseFilter* pBF);
-extern void		TracePinInfo(IPin* pPin);
-extern void		SetThreadName( DWORD dwThreadID, LPCSTR szThreadName);
-extern void		HexDump(CString fName, BYTE* buf, int size);
-extern DWORD	GetDefChannelMask(WORD nChannels);
-extern void		CorrectComboListWidth(CComboBox& m_pComboBox);
+extern DWORD    YCrCbToRGB_Rec601(BYTE A, BYTE Y, BYTE Cr, BYTE Cb);
+extern DWORD    YCrCbToRGB_Rec709(BYTE A, BYTE Y, BYTE Cr, BYTE Cb);
+extern void     TraceFilterInfo(IBaseFilter* pBF);
+extern void     TracePinInfo(IPin* pPin);
+extern void     SetThreadName(DWORD dwThreadID, LPCSTR szThreadName);
+extern void     HexDump(CString fName, BYTE* buf, int size);
+extern void     CorrectComboListWidth(CComboBox& m_pComboBox);
 
-extern void		getExtraData(const BYTE *format, const GUID *formattype, const size_t formatlen, BYTE *extra, unsigned int *extralen);
-extern void		audioFormatTypeHandler(const BYTE *format, const GUID *formattype, DWORD *pnSamples, WORD *pnChannels, WORD *pnBitsPerSample, WORD *pnBlockAlign, DWORD *pnBytesPerSec);
+extern void     getExtraData(const BYTE* format, const GUID* formattype, const size_t formatlen, BYTE* extra, unsigned int* extralen);
+extern void     audioFormatTypeHandler(const BYTE* format, const GUID* formattype, DWORD* pnSamples, WORD* pnChannels, WORD* pnBitsPerSample, WORD* pnBlockAlign, DWORD* pnBytesPerSec);
 
 typedef enum {
-	PICT_NONE,
-	PICT_TOP_FIELD,
-	PICT_BOTTOM_FIELD,
-	PICT_FRAME
+    PICT_NONE,
+    PICT_TOP_FIELD,
+    PICT_BOTTOM_FIELD,
+    PICT_FRAME
 } FF_FIELD_TYPE;
 
 class CPinInfo : public PIN_INFO
 {
 public:
-	CPinInfo() { pFilter = NULL; }
-	~CPinInfo() { if (pFilter) { pFilter->Release(); } }
+    CPinInfo() { pFilter = NULL; }
+    ~CPinInfo() { if (pFilter) { pFilter->Release(); } }
 };
 
 class CFilterInfo : public FILTER_INFO
 {
 public:
-	CFilterInfo() { pGraph = NULL; }
-	~CFilterInfo() { if (pGraph) { pGraph->Release(); } }
+    CFilterInfo() { pGraph = NULL; }
+    ~CFilterInfo() { if (pGraph) { pGraph->Release(); } }
 };
 
-#define BeginEnumFilters(pFilterGraph, pEnumFilters, pBaseFilter) \
-	{CComPtr<IEnumFilters> pEnumFilters; \
-	if (pFilterGraph && SUCCEEDED(pFilterGraph->EnumFilters(&pEnumFilters))) \
-	{ \
-		for (CComPtr<IBaseFilter> pBaseFilter; S_OK == pEnumFilters->Next(1, &pBaseFilter, 0); pBaseFilter = NULL) \
-		{ \
- 
+#define BeginEnumFilters(pFilterGraph, pEnumFilters, pBaseFilter)                                                  \
+    {CComPtr<IEnumFilters> pEnumFilters;                                                                           \
+    if (pFilterGraph && SUCCEEDED(pFilterGraph->EnumFilters(&pEnumFilters)))                                       \
+    {                                                                                                              \
+        for (CComPtr<IBaseFilter> pBaseFilter; S_OK == pEnumFilters->Next(1, &pBaseFilter, 0); pBaseFilter = NULL) \
+    {
+
 #define EndEnumFilters }}}
 
-#define BeginEnumCachedFilters(pGraphConfig, pEnumFilters, pBaseFilter) \
-	{CComPtr<IEnumFilters> pEnumFilters; \
-	if (pGraphConfig && SUCCEEDED(pGraphConfig->EnumCacheFilter(&pEnumFilters))) \
-	{ \
-		for (CComPtr<IBaseFilter> pBaseFilter; S_OK == pEnumFilters->Next(1, &pBaseFilter, 0); pBaseFilter = NULL) \
-		{ \
- 
+#define BeginEnumCachedFilters(pGraphConfig, pEnumFilters, pBaseFilter)                                            \
+    {CComPtr<IEnumFilters> pEnumFilters;                                                                           \
+    if (pGraphConfig && SUCCEEDED(pGraphConfig->EnumCacheFilter(&pEnumFilters)))                                   \
+    {                                                                                                              \
+        for (CComPtr<IBaseFilter> pBaseFilter; S_OK == pEnumFilters->Next(1, &pBaseFilter, 0); pBaseFilter = NULL) \
+        {
+
 #define EndEnumCachedFilters }}}
 
-#define BeginEnumPins(pBaseFilter, pEnumPins, pPin) \
-	{CComPtr<IEnumPins> pEnumPins; \
-	if (pBaseFilter && SUCCEEDED(pBaseFilter->EnumPins(&pEnumPins))) \
-	{ \
-		for (CComPtr<IPin> pPin; S_OK == pEnumPins->Next(1, &pPin, 0); pPin = NULL) \
-		{ \
- 
+#define BeginEnumPins(pBaseFilter, pEnumPins, pPin)                                 \
+    {CComPtr<IEnumPins> pEnumPins;                                                  \
+    if (pBaseFilter && SUCCEEDED(pBaseFilter->EnumPins(&pEnumPins)))                \
+    {                                                                               \
+        for (CComPtr<IPin> pPin; S_OK == pEnumPins->Next(1, &pPin, 0); pPin = NULL) \
+        {
+
 #define EndEnumPins }}}
 
-#define BeginEnumMediaTypes(pPin, pEnumMediaTypes, pMediaType) \
-	{CComPtr<IEnumMediaTypes> pEnumMediaTypes; \
-	if (pPin && SUCCEEDED(pPin->EnumMediaTypes(&pEnumMediaTypes))) \
-	{ \
-		AM_MEDIA_TYPE* pMediaType = NULL; \
-		for (; S_OK == pEnumMediaTypes->Next(1, &pMediaType, NULL); DeleteMediaType(pMediaType), pMediaType = NULL) \
-		{ \
- 
+#define BeginEnumMediaTypes(pPin, pEnumMediaTypes, pMediaType)                                                      \
+    {CComPtr<IEnumMediaTypes> pEnumMediaTypes;                                                                      \
+    if (pPin && SUCCEEDED(pPin->EnumMediaTypes(&pEnumMediaTypes)))                                                  \
+    {                                                                                                               \
+        AM_MEDIA_TYPE* pMediaType = NULL;                                                                           \
+        for (; S_OK == pEnumMediaTypes->Next(1, &pMediaType, NULL); DeleteMediaType(pMediaType), pMediaType = NULL) \
+        {
+
 #define EndEnumMediaTypes(pMediaType) } if (pMediaType) DeleteMediaType(pMediaType); }}
 
-#define BeginEnumSysDev(clsid, pMoniker) \
-	{CComPtr<ICreateDevEnum> pDevEnum4$##clsid; \
-	pDevEnum4$##clsid.CoCreateInstance(CLSID_SystemDeviceEnum); \
-	CComPtr<IEnumMoniker> pClassEnum4$##clsid; \
-	if (SUCCEEDED(pDevEnum4$##clsid->CreateClassEnumerator(clsid, &pClassEnum4$##clsid, 0)) \
-	&& pClassEnum4$##clsid) \
-	{ \
-		for (CComPtr<IMoniker> pMoniker; pClassEnum4$##clsid->Next(1, &pMoniker, 0) == S_OK; pMoniker = NULL) \
-		{ \
- 
+#define BeginEnumSysDev(clsid, pMoniker)                                                                      \
+    {CComPtr<ICreateDevEnum> pDevEnum4$##clsid;                                                               \
+    pDevEnum4$##clsid.CoCreateInstance(CLSID_SystemDeviceEnum);                                               \
+    CComPtr<IEnumMoniker> pClassEnum4$##clsid;                                                                \
+    if (SUCCEEDED(pDevEnum4$##clsid->CreateClassEnumerator(clsid, &pClassEnum4$##clsid, 0))                   \
+    && pClassEnum4$##clsid)                                                                                   \
+    {                                                                                                         \
+        for (CComPtr<IMoniker> pMoniker; pClassEnum4$##clsid->Next(1, &pMoniker, 0) == S_OK; pMoniker = NULL) \
+        {
+
 #define EndEnumSysDev }}}
 
-#define QI(i) (riid == __uuidof(i)) ? GetInterface((i*)this, ppv) :
+#define QI(i)  (riid == __uuidof(i)) ? GetInterface((i*)this, ppv) :
 #define QI2(i) (riid == IID_##i) ? GetInterface((i*)this, ppv) :
 
 template <typename T> __inline void INITDDSTRUCT(T& dd)
 {
-	ZeroMemory(&dd, sizeof(dd));
-	dd.dwSize = sizeof(dd);
+    ZeroMemory(&dd, sizeof(dd));
+    dd.dwSize = sizeof(dd);
 }
 
 #ifndef _countof
@@ -217,29 +217,29 @@ template <typename T> __inline void INITDDSTRUCT(T& dd)
 template <class T>
 static CUnknown* WINAPI CreateInstance(LPUNKNOWN lpunk, HRESULT* phr)
 {
-	*phr = S_OK;
-	CUnknown* punk = DNew T(lpunk, phr);
-	if (punk == NULL) {
-		*phr = E_OUTOFMEMORY;
-	}
-	return punk;
+    *phr = S_OK;
+    CUnknown* punk = DNew T(lpunk, phr);
+    if (punk == NULL) {
+        *phr = E_OUTOFMEMORY;
+    }
+    return punk;
 }
 
-#define SAFE_DELETE(p)       { if (p) { delete (p);     (p)=NULL; } }
-#define SAFE_DELETE_ARRAY(p) { if (p) { delete[] (p);   (p)=NULL; } }
-#define SAFE_RELEASE(p)      { if (p) { (p)->Release(); (p)=NULL; } }
+#define SAFE_DELETE(p)       { if (p) { delete (p);     (p) = NULL; } }
+#define SAFE_DELETE_ARRAY(p) { if (p) { delete [] (p);  (p) = NULL; } }
+#define SAFE_RELEASE(p)      { if (p) { (p)->Release(); (p) = NULL; } }
 
 inline int LNKO(int a, int b)
 {
-	if (a == 0 || b == 0) {
-		return 1;
-	}
-	while (a != b) {
-		if (a < b) {
-			b -= a;
-		} else if (a > b) {
-			a -= b;
-		}
-	}
-	return a;
+    if (a == 0 || b == 0) {
+        return 1;
+    }
+    while (a != b) {
+        if (a < b) {
+            b -= a;
+        } else if (a > b) {
+            a -= b;
+        }
+    }
+    return a;
 }

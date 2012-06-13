@@ -1,8 +1,7 @@
 /*
  * $Id$
  *
- * (C) 2003-2006 Gabest
- * (C) 2006-2012 see Authors.txt
+ * (C) 2012 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -23,12 +22,25 @@
 
 #pragma once
 
-#include <atlimage.h>
-#include "mplayerc.h"
+#include <Windows.h>
 
-
-class MPCPngImage : public CImage
+class SysVersion
 {
+    SysVersion() {};
+
+    static OSVERSIONINFOEX InitFullVersion();
+
+    static const OSVERSIONINFOEX fullVersion;
+    static const DWORD version;
+
 public:
-	bool LoadFromResource(UINT id);
+    static OSVERSIONINFOEX GetFullVersion() { return fullVersion; }
+    static DWORD GetVersion() { return version; }
+
+    static bool IsXPOrLater() { return (version >= 0x0501); }
+    static bool IsVista() { return (version == 0x0600); }
+    static bool IsVistaOrLater() { return (version >= 0x0600); }
+    static bool Is7() { return (version == 0x0601); }
+    static bool Is7OrLater() { return (version >= 0x0601); }
+    //static bool Is8() { return (version == 0x0602); }
 };

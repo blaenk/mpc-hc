@@ -1,3 +1,22 @@
+# $Id$
+#
+# (C) 2007-2012 see Authors.txt
+#
+# This file is part of MPC-HC.
+#
+# MPC-HC is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# MPC-HC is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 CC = gcc.exe
 BIN_DIR  = ../../../bin
 ZLIB_DIR = ../zlib
@@ -115,6 +134,9 @@ SRCS_C = \
     libavcodec/faandct.c \
     libavcodec/faanidct.c \
     libavcodec/fft.c \
+    libavcodec/flac.c \
+    libavcodec/flacdata.c \
+    libavcodec/flacdec.c \
     libavcodec/flvdec.c \
     libavcodec/fmtconvert.c \
     libavcodec/golomb.c \
@@ -254,10 +276,12 @@ SRCS_C = \
 \
     libavutil/audioconvert.c \
     libavutil/avstring.c \
+    libavutil/bprint.c \
     libavutil/cpu.c \
     libavutil/crc.c \
     libavutil/dict.c \
     libavutil/eval.c \
+    libavutil/float_dsp.c \
     libavutil/imgutils.c \
     libavutil/intfloat_readwrite.c \
     libavutil/inverse.c \
@@ -272,9 +296,11 @@ SRCS_C = \
     libavutil/random_seed.c \
     libavutil/rational.c \
     libavutil/samplefmt.c \
+    libavutil/sha.c \
     libavutil/timecode.c \
     libavutil/utils.c \
     libavutil/x86/cpu.c \
+    libavutil/x86/float_dsp_init.c \
 \
     libswscale/input.c \
     libswscale/options.c \
@@ -316,6 +342,7 @@ SRCS_YASM = \
     libavcodec/x86/vp3dsp.asm \
     libavcodec/x86/vp56dsp.asm \
     libavcodec/x86/vp8dsp.asm \
+    libavutil/x86/float_dsp.asm \
     libswscale/x86/input.asm \
     libswscale/x86/output.asm \
     libswscale/x86/scale.asm

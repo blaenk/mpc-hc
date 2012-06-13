@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * (C) 2011-2012 see Authors.txt
+ * (C) 2012 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -20,10 +20,18 @@
  *
  */
 
-// precompiled headers support
+#include "stdafx.h"
+#include "SysVersion.h"
 
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
-#endif
 
-#include "pngpriv.h"
+const OSVERSIONINFOEX SysVersion::fullVersion = InitFullVersion();
+const DWORD SysVersion::version = MAKEWORD(fullVersion.dwMinorVersion, fullVersion.dwMajorVersion);
+
+OSVERSIONINFOEX SysVersion::InitFullVersion()
+{
+    OSVERSIONINFOEX fullVersion = {0};
+    fullVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+    GetVersionEx((LPOSVERSIONINFO)&fullVersion);
+
+    return fullVersion;
+}

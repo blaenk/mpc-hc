@@ -126,9 +126,12 @@
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SysVersion.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="vd.cpp" />
-    <ClCompile Include="vd_asm.cpp" />
+    <ClCompile Include="vd_asm.cpp">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="WinAPIUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +149,7 @@
     <ClInclude Include="SharedInclude.h" />
     <ClInclude Include="simd_common.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SysVersion.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="vd.h" />
     <ClInclude Include="vd_asm.h" />

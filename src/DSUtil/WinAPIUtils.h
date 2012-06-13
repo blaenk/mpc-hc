@@ -26,16 +26,15 @@
 
 struct IDirect3D9;
 
-BOOL IsWinXPOrLater();
-BOOL IsWinVistaOrLater();
-BOOL IsWin7OrLater();
-BOOL IsWin8();
 
-bool SetPrivilege(LPCTSTR privilege, bool bEnable=true);
+bool SetPrivilege(LPCTSTR privilege, bool bEnable = true);
 
-bool ExportRegistryKey(CStdioFile& file, HKEY hKeyRoot, CString keyName=_T(""));
+bool ExportRegistryKey(CStdioFile& file, HKEY hKeyRoot, CString keyName = _T(""));
 
 UINT GetAdapter(IDirect3D9* pD3D, HWND hWnd);
+
+void GetMessageFont(LOGFONT* lf);
+void GetStatusFont(LOGFONT* lf);
 
 bool IsFontInstalled(LPCTSTR lpszFont);
 

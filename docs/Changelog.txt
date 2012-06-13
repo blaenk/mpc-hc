@@ -10,14 +10,29 @@ Legend:
 
 1.6.3 - not released yet
 =========================
-+ The DirectX runtime dlls are included in the distribution packages so it's no longer needed
-  to install the DirectX runtime
++ The DirectX runtime dlls are included in the distribution packages
+  so it's no longer needed to install the DirectX runtime
++ MpegSplitter: support for DVD-Audio LPCM and MLP in .aob files
+* Replaced all custom and thirdparty image loading code in favor of Windows's CImage.
+  This gives us support for other formats for free and a size reduction of roughly 100KB
 * Updated unrar.dll to v4.20b3
 * Updated MediaInfoLib to v0.7.58
 * Updated ZenLib to v0.4.27
-* Updated FFmpeg (git eb7efc1)
-* Updated Czech, Russian and Ukrainian translations
+* Updated FFmpeg (git 94d5650)
+* Updated Czech, Russian, Ukrainian, Basque and Polish translations
+* Ticket #2227, Hide the seek bar in capture mode
+* Ticket #2342, MPC-HC will now use the Windows theme font for the Statusbar, OSD messages
+  and a few other places on Windows Vista and newer
 ! The hand cursor wasn't shown in the web links in Keys and WebServer options page
-! [DVB] Fix the parsing of the event's informations
+! Toolbar code cleanup and background fix for Windows XP
+! Ticket #504, Fixed rounding errors that prevented a properly centered image
+  and caused unneeded resizing because the video size was off by one
 ! Ticket #2330, Fix the radio buttons in the Logo options page
 ! Ticket #2349, Recent Files: "Clear List" did not remove all files from the list
+! Ticket #2356, The "With icons" and "File(s)" options in the Formats options page
+  were not applied if no association was previously modified
+! Ticket #2362, [DVB] Fix the Electronic Program Guide (EPG):
+    - Fix the parsing of the event's information
+    - Fix the parsing of the characters' encoding
+    - Fix the display of the start and end time when DST is observed
+! Ticket #2365, The volume slider wasn't properly redrawn in some cases

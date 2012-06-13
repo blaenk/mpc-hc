@@ -79,7 +79,7 @@
            Parametric Stereo.
  */
 
-
+#include "libavutil/float_dsp.h"
 #include "avcodec.h"
 #include "internal.h"
 #include "get_bits.h"
@@ -490,6 +490,7 @@ static ChannelElement *get_che(AACContext *ac, int type, int elem_id)
             return NULL;
 
         ac->oc[1].m4ac.chan_config = 2;
+        ac->oc[1].m4ac.ps = 0;
     }
     // And vice-versa
     if (!ac->tags_mapped && type == TYPE_SCE && ac->oc[1].m4ac.chan_config == 2) {
@@ -507,6 +508,8 @@ static ChannelElement *get_che(AACContext *ac, int type, int elem_id)
             return NULL;
 
         ac->oc[1].m4ac.chan_config = 1;
+        if (ac->oc[1].m4ac.sbr)
+            ac->oc[1].m4ac.ps = -1;
     }
     // For indexed channel configurations map the channels solely based on position.
     switch (ac->oc[1].m4ac.chan_config) {
@@ -903,6 +906,7 @@ static av_cold int aac_decode_init(AVCodecContext *avctx)
 
     ff_dsputil_init(&ac->dsp, avctx);
     ff_fmt_convert_init(&ac->fmt_conv, avctx);
+    avpriv_float_dsp_init(&ac->fdsp, avctx->flags & CODEC_FLAG_BITEXACT);
 
     ac->random_state = 0x1f2e3d4c;
 
@@ -2071,10 +2075,10 @@ static void windowing_and_mdct_ltp(AACContext *ac, float *out,
     const float *swindow_prev = ics->use_kb_window[1] ? ff_aac_kbd_short_128 : ff_sine_128;
 
     if (ics->window_sequence[0] != LONG_STOP_SEQUENCE) {
-        ac->dsp.vector_fmul(in, in, lwindow_prev, 1024);
+        ac->fdsp.vector_fmul(in, in, lwindow_prev, 1024);
     } else {
         memset(in, 0, 448 * sizeof(float));
-        ac->dsp.vector_fmul(in + 448, in + 448, swindow_prev, 128);
+        ac->fdsp.vector_fmul(in + 448, in + 448, swindow_prev, 128);
     }
     if (ics->window_sequence[0] != LONG_START_SEQUENCE) {
         ac->dsp.vector_fmul_reverse(in + 1024, in + 1024, lwindow, 1024);
@@ -2525,7 +2529,8 @@ static int aac_decode_frame_int(AVCodecContext *avctx, void *data,
 
         if (avctx->sample_fmt == AV_SAMPLE_FMT_FLT)
             // ==> Start patch MPC
-            float_interleave((float *)ac->frame.data[0], (const float **)ac->output_data,
+            float_interleave((float *)ac->frame.data[0],
+                                          (const float **)ac->output_data,
             // ==> End patch MPC
                                           samples, avctx->channels);
         else
