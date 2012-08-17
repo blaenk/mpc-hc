@@ -1,0 +1,6 @@
+[submodule "ffmpeg"]
+	path = src/thirdparty/ffmpeg
+	url = git@github.com:mpc-hc/FFmpeg.git
+[submodule "lcms2"]
+	path = src/thirdparty/lcms2
+	url = git@github.com:mpc-hc/Little-CMS.git
